@@ -6,22 +6,29 @@ import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
-import Box from '@material-ui/core/Box';
+import { IconButton } from "@material-ui/core";
+import { DeleteOutlined } from '@material-ui/icons';
 
 
-const ArticlesItems = (probs) => {
-    console.log(probs.article);
+
+const ArticlesItems = (probs, handelDelete) => {
+    
+    // console.log(Object.keys(probs.article));
+    // const prop = probs.article.title;
+    // const newCar = Object.keys(probs.article).reduce((object, key) => {
+    //     if (key === prop) {
+    //         console.log("Delete", probs.article.title)
+    //     }
+    //     return object
+    //   }, {})
+
+    // var index = probs.article.findIndex(e=> console.log("index", e));
+    // var index = probs.article.findIndex(obj => obj.title === probs.article.title);
+    // console.log(newCar);
 
     return(
-        // <Grid item xs={12} sm={probs.article.width} md={probs.article.width}>
-        //     <a href={probs.article.url}>
-        //         <img alt={probs.article.title} src={probs.article.imageUrl} />
-        //     </a>
-        //     <Paper>{probs.article.title}</Paper>
-        // </Grid>
             <Grid item xs={12} sm={probs.article.width} md={probs.article.width} >
-                <Box m={2}>
-                <Card sx={{ maxWidth: 345 }}>
+                <Card sx={{ maxWidth: 345 }} elevation={2}>
                     <CardMedia
                         component="img"
                         image={probs.article.imageUrl}
@@ -33,40 +40,29 @@ const ArticlesItems = (probs) => {
                         </Typography>
                     </CardContent>
                     <CardActions>
-                        <Button size="small">Delete</Button>
+                        <IconButton onClick={() => console.log("Delete", probs.article.title)}>
+                            <DeleteOutlined/>
+                        </IconButton>
                         <a href={probs.article.url}>
                             <Button size="small">Learn More</Button>
                         </a>
                     </CardActions>
                 </Card>
-
-            </Box>
             </Grid>
 
-                /* <Segment className="segment">
-                <Grid.Row>
-                    <Grid.Column >
-                            <a href={probs.article.url}>
-                                <Image alt={probs.article.title} src={probs.article.imageUrl} />
-                            </a>
-                            {probs.article.title}
-                    </Grid.Column>
-                </Grid.Row>
-                </Segment> */
-
-        // <div className="article-item" >
-        //     <div className="ui segment">
-        //         <div className="content" style={{marginTop:5}} >
-        //             <a href={probs.article.url}>
-        //                 <img alt={probs.article.title} className="ui image" src={probs.article.imageUrl} />
-        //             </a>
-        //         </div>
-        //         <div className="header">{probs.article.title}</div>
-
-        //     </div>
-        // </div>
     )
 }
 
+
+// deleteHandler: function(e,id){
+//     //find index of element
+//     var index = this.state.listdata.findIndex(e=>e.id==id);
+//     //copy array
+//     var newAray = this.state.listdata.slice();
+//     //delete element by index
+//     newAray.splice(index, 1);
+//     this.setState({listdata: newAray});
+
+// },
 
 export default ArticlesItems;
