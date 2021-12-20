@@ -8,58 +8,87 @@ import Button from '@material-ui/core/Button';
 import { IconButton } from "@material-ui/core";
 import { DeleteOutlined} from '@material-ui/icons';
 import EditIcon from '@material-ui/icons/Edit';
-import styled from 'styled-components';
 
 
 
-const ArticlesItems = (probs, handelDelete) => {
+const ArticlesItems = (props, handelDelete) => {
+    
+    const height = new URLSearchParams(window.location.href).get('height');
+    const width = new URLSearchParams(window.location.href).get('width');
+
+    const styles = {
+        media: {
+          height: Number(height),
+          width: Number(width),
+        }
+    };
+
+    const [titleValue, setTitleValue] = useState(props.article.title);
+    
     // const Input = styled.input`
     // font-weight: bold;
     // width: 100%;
     // font-size: 18px;
     // `;
-    
-    // const [state, setState] = useState({
-    //     title: probs.article.title
-    //   });
 
     const [editMode, setEditMode] = useState(false);
     
-    const handleEditInput = () => {
+    const handleEditInput = (event) => {
         setEditMode(!editMode);
-            // ToDO    
-            console.log("edit");
+    };
+    const onSubmit  = (event) =>{
+        event.preventDefault(); 
+         props.onEditSubmit(titleValue);
+         
+
     }
+    const onChange = (event)=>{
+        // console.log(event.target.value);
+        setTitleValue({titleValue:event.target.value});
+    }
+
+    const handleDelete = (event) => {
+        console.log(props);
+        console.log("delete");
+        props.onDeleteSubmit(props);
+        
+    };
      
     return(
-        <Grid item xs={12} sm={probs.article.width} md={probs.article.width} >
+
+        <Grid item xs={12} sm={props.article.width} md={props.article.width} >
             <Card sx={{ maxWidth: 345 }} elevation={2}>
                 <CardMedia
                     component="img"
-                    image={probs.article.imageUrl}
-                    alt={probs.article.type}
+                    image={props.article.imageUrl}
+                    alt={props.article.type}
+                    style={styles.media} 
                 />
                 <CardContent>
-                    <input
-                        style={{
-                            "fontweight": "bold",
-                            "width": "100%",
-                            "fontsize": "18px",
-                        }}
-                        type="text"
-                        defaultValue={probs.article.title}
-                        disabled={!editMode}
-                    />
+                    <form onSubmit = {(e) => {onSubmit(e)}}>
+                        <input
+                            style={{
+                                "fontweight": "bold",
+                                "width": "100%",
+                                "fontsize": "18px",
+                            }}
+                            type="text"
+                            defaultValue={titleValue}
+                            disabled={!editMode}
+                            onChange={onChange}
+                        />
+
+                    </form>
                 </CardContent>
                 <CardActions>
                     <IconButton onClick={handleEditInput}>
                         <EditIcon
                         />
                     </IconButton>
-                    <IconButton onClick={()=> console.log("Delete", probs.article.title)}>
+                    <IconButton onClick={handleDelete}>
                         <DeleteOutlined/>
                     </IconButton>
-                    <a href={probs.article.url}>
+                    <a href={props.article.url}>
                         <Button size="small">Learn More</Button>
                     </a>
                 </CardActions>
