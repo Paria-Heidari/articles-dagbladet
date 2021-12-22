@@ -6,21 +6,21 @@ import Box from '@material-ui/core/Box';
 
 const ArticlesList = (props) => {
     
-    console.log(props);
+    // console.log(props);
     
     const [articles, setArticles] = useState(props.articles);
 
-    console.log(articles);
+    // console.log(articles);
     
 
     const onEditSubmit =  async (editedArti) =>{
 
-        console.log( editedArti.props.article.title);
-        console.log(props.articles);
+        // console.log( editedArti);
+        // console.log(props.articles);
         
-        console.log(articles);
+        // console.log(articles);
         let copy_articles = [...articles];
-        console.log(copy_articles);
+        // console.log(copy_articles);
 
         copy_articles.map((allArt, rIndex) => {
             if (rIndex === editedArti.props.rowIndex) {
@@ -35,7 +35,6 @@ const ArticlesList = (props) => {
                         let copy_selectedArticle = { ...artCol};
                         // Update the property
                         copy_selectedArticle.title = editedArti.props.article.title;
-                        console.log(copy_selectedArticle);
                         // put it back into array
                         artCol = copy_selectedArticle
                 
@@ -47,35 +46,51 @@ const ArticlesList = (props) => {
         });
 
         setArticles(copy_articles);
-        console.log("copy_articles", copy_articles);
+        // console.log("copy_articles", copy_articles);
+        // console.log("copy_articles", articles);
 
-        await dagBladet.patch('/aller-structure-task/test_data.json', copy_articles)
-            .then(response => {
-                response = response.status;
-                setArticles({articles:response});
-            })
-        .catch(err => console.warn('There was an error!',err));
+
+        // await dagBladet.patch('', copy_articles)
+        //     .then(response => {
+        //         response = response.status;
+        //         setArticles({articles:response});
+        //     })
+        // .catch(err => console.warn('There was an error!',err));
     }
 
         const onDeleteSubmit = async ( selectedArticle) =>{
-            console.log(props);
-            console.log(selectedArticle.article);
-            // selectedArticle.article.filter(a => a.title !== )
-            await dagBladet.post('/aller-structure-task/test_data.json', selectedArticle)
-            .then(response => {
-                response = response.status;
-                setArticles({articles:response});
-            })
-            .catch(err => console.warn(err));
-        }
+            // console.log(selectedArticle.article);
+            // console.log(props);
+            let filteredArticles = [...articles];
+            filteredArticles.map((row, rowIndex) => {
+                if (rowIndex === selectedArticle.rowIndex) {
+                    row.columns.map((article, columnIndex) => {
+                        if (columnIndex === selectedArticle.index) {
+                            console.log("befor",filteredArticles);
+                            delete filteredArticles[rowIndex].columns[columnIndex];
+                        }
+                        return columnIndex;
+                    })
+                }
+                return rowIndex;
+            });
+            setArticles(filteredArticles);
+            console.log(articles);
+            // console.log("filteredArticles", filteredArticles);
 
+            // await dagBladet.post('api/dagBladet', filteredArticles)
+            // .then(response => {
+            //     response = response.status;
+            //     setArticles({articles:response});
+            // })
+            // .catch(err => console.warn(err));
+        }
 
         const articlesList = props.articles.map((arti,rowIndex) =>{
             return arti.columns.map((article,index)=>{
                 return <ArticlesItems key={index} article={article} rowIndex={rowIndex} index={index} onEditSubmit={onEditSubmit} onDeleteSubmit={onDeleteSubmit}/>;
             })
         })
-        
 
     return (
         <Box mt={2} >

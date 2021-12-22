@@ -10,6 +10,11 @@ import { DeleteOutlined} from '@material-ui/icons';
 import EditIcon from '@material-ui/icons/Edit';
 import SaveIcon from '@material-ui/icons/Save';
 import Box from '@material-ui/core/Box';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
 
 
 const ArticlesItems = (props) => {
@@ -26,8 +31,16 @@ const ArticlesItems = (props) => {
     const [titleValue, setTitleValue] = useState(props.article.title);
     const [editMode, setEditMode] = useState(false);
     
-   
-    
+    const [open, setOpen] = React.useState(false);
+
+    const handleClickOpen = () => {
+        setOpen(!open);
+    };
+
+    const handleClose = () => {
+        setOpen(open);
+    };
+
     const handleEditInput = (event) => {
         setEditMode(!editMode);
     };
@@ -42,8 +55,9 @@ const ArticlesItems = (props) => {
     }
 
     const handleDelete = (event) => {
-        // console.log(props);
+        handleClose();
         console.log("delete");
+        console.log(props);
         props.onDeleteSubmit(props);
         
     };
@@ -88,8 +102,28 @@ const ArticlesItems = (props) => {
                     </form>
                 </CardContent>
                 <CardActions>
-                    <IconButton onClick={handleDelete}>
+                    <IconButton onClick={handleClickOpen}>
                         <DeleteOutlined/>
+                        <Dialog
+                        open={open}
+                        onClose={handleClose}
+                        aria-labelledby="draggable-dialog-title"
+                        >
+                            <DialogTitle style={{ cursor: 'move' }} id="draggable-dialog-title">
+                            Slette Artikkelen!
+                            </DialogTitle>
+                            <DialogContent>
+                                <DialogContentText>
+                                    Er du sikker på at du vil slette den valgte Artikkelen?
+                                </DialogContentText>
+                            </DialogContent>
+                            <DialogActions>
+                                <Button autoFocus onClick={handleClose}>
+                                    Avbryt
+                                </Button>
+                                <Button onClick={handleDelete}>Ja</Button>
+                            </DialogActions>
+                        </Dialog>
                     </IconButton>
                     <a href={props.article.url}>
                         <Button size="small">Learn More</Button>
