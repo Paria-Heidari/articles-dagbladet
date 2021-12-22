@@ -10,43 +10,28 @@ class App extends React.Component{
 
     constructor(props) {
         super(props);
-        this.state = { apiResponse: "" };
+        this.state = { 
+            articles: [],
+            setArticles:[] };
     }
     
-    callAPI() {
-        fetch("http://localhost:9000/appAPI")
-            .then(res => res.text())
-            .then(res => this.setState({ apiResponse: res }))
-            .catch(err => console.warn(err));
+    async componentDidMount() {
+        // GET request with async/await
+        const response = await dagBladet.get(`/aller-structure-task/test_data.json`);
+        const data = await response.data[0];
+        this.setState({ articles: data })
     }
-    
-    componentDidMount() {
-        this.callAPI();
-    }
-
-    // state = {
-    //     articles: [],
-    //     setArticles:[],
-    //   };
-
-    // async componentDidMount() {
-    //     // GET request with async/await
-    //     const response = await dagBladet.get(`/aller-structure-task/test_data.json`);
-    //     const data = await response.data[0];
-    //     this.setState({ articles: data })
-    // }
     
     render(){
         return (
         <div>
-            <p className="App-intro">;{this.state.apiResponse}</p>
-            {/* <BrowserRouter>
+            <BrowserRouter>
             <Header/>
                 <Routes>
                     <Route path="/"  element={<Articles articles={this.state.articles}/>}  />
                     <Route path="/ArticlesList&height=200&width=200"  element={<ArticlesList articles={this.state.articles}/>}/>
                 </Routes>
-            </BrowserRouter> */}
+            </BrowserRouter>
         </div>
         )
     }
