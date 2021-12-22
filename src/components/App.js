@@ -14,8 +14,7 @@ class App extends React.Component{
             articles: [],
             setArticles:[] };
     }
-    
-    async componentDidMount() {
+      async componentDidMount() {
         // GET request with async/await
         const response = await dagBladet.get(`/aller-structure-task/test_data.json`);
         const data = await response.data[0];

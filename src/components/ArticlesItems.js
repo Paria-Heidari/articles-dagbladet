@@ -18,7 +18,6 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 
 
 const ArticlesItems = (props) => {
-    // console.log(props);
     const height = new URLSearchParams(window.location.href).get('height');
     const width = new URLSearchParams(window.location.href).get('width');
     const styles = {
@@ -30,7 +29,6 @@ const ArticlesItems = (props) => {
     const [articles, setArticles] = useState({props});
     const [titleValue, setTitleValue] = useState(props.article.title);
     const [editMode, setEditMode] = useState(false);
-    
     const [open, setOpen] = React.useState(false);
 
     const handleClickOpen = () => {
