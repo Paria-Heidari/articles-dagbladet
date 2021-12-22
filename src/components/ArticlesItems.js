@@ -134,6 +134,4 @@ const ArticlesItems = (props) => {
 
     )
 }
-
-
 export default ArticlesItems;
