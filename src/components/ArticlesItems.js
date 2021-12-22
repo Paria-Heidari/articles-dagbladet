@@ -54,8 +54,6 @@ const ArticlesItems = (props) => {
 
     const handleDelete = (event) => {
         handleClose();
-        console.log("delete");
-        console.log(props);
         props.onDeleteSubmit(props);
         
     };

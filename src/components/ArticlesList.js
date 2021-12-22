@@ -12,7 +12,6 @@ const ArticlesList = (props) => {
     let copy_articles = [...articles];
     copy_articles.map((allArt, rIndex) => {
         if (rIndex === editedArti.props.rowIndex) {
-            console.log(editedArti.props);
             allArt.columns.map((artCol, cIndex) => {
                 if (cIndex === editedArti.props.index) {
                     // Make a shallow copy of the elemen
@@ -45,7 +44,6 @@ const ArticlesList = (props) => {
             return rowIndex;
         });
         setArticles(filteredArticles);
-        console.log(articles);
     }
 
     const articlesList = props.articles.map((arti,rowIndex) =>{
