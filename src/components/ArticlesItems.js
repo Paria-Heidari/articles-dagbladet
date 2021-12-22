@@ -8,54 +8,47 @@ import Button from '@material-ui/core/Button';
 import { IconButton } from "@material-ui/core";
 import { DeleteOutlined} from '@material-ui/icons';
 import EditIcon from '@material-ui/icons/Edit';
+import SaveIcon from '@material-ui/icons/Save';
+import Box from '@material-ui/core/Box';
 
 
-
-const ArticlesItems = (props, handelDelete) => {
-    
+const ArticlesItems = (props) => {
+    // console.log(props);
     const height = new URLSearchParams(window.location.href).get('height');
     const width = new URLSearchParams(window.location.href).get('width');
-
     const styles = {
         media: {
           height: Number(height),
           width: Number(width),
         }
     };
-
+    const [articles, setArticles] = useState({props});
     const [titleValue, setTitleValue] = useState(props.article.title);
-    
-    // const Input = styled.input`
-    // font-weight: bold;
-    // width: 100%;
-    // font-size: 18px;
-    // `;
-
     const [editMode, setEditMode] = useState(false);
+    
+   
     
     const handleEditInput = (event) => {
         setEditMode(!editMode);
     };
     const onSubmit  = (event) =>{
         event.preventDefault(); 
-         props.onEditSubmit(titleValue);
-         
-
+        articles.props.article.title = titleValue;
+        setArticles({articles: articles});
+        props.onEditSubmit(articles);
     }
     const onChange = (event)=>{
-        // console.log(event.target.value);
         setTitleValue({titleValue:event.target.value});
     }
 
     const handleDelete = (event) => {
-        console.log(props);
+        // console.log(props);
         console.log("delete");
         props.onDeleteSubmit(props);
         
     };
      
     return(
-
         <Grid item xs={12} sm={props.article.width} md={props.article.width} >
             <Card sx={{ maxWidth: 345 }} elevation={2}>
                 <CardMedia
@@ -77,14 +70,24 @@ const ArticlesItems = (props, handelDelete) => {
                             disabled={!editMode}
                             onChange={onChange}
                         />
-
+                    <Box mt={2} >
+                        <IconButton onClick={handleEditInput}>
+                            <EditIcon
+                            />
+                        </IconButton>
+                        <Button
+                        type="submit"
+                        startIcon={<SaveIcon />}
+                        variant="contained"
+                        size="small"
+                        color="inherit"
+                        >
+                        Save
+                    </Button>
+                    </Box>
                     </form>
                 </CardContent>
                 <CardActions>
-                    <IconButton onClick={handleEditInput}>
-                        <EditIcon
-                        />
-                    </IconButton>
                     <IconButton onClick={handleDelete}>
                         <DeleteOutlined/>
                     </IconButton>

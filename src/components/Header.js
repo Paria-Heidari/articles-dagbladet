@@ -16,11 +16,11 @@ const Header = () => {
   return (
       <AppBar position="static">
         <Toolbar>
+          <Link to="/" className={classes.link}>
+            <Typography variant="h6">Articles</Typography>
+          </Link>
           <Link to="/ArticlesList&height=200&width=200" className={classes.link}>
             <Typography variant="h6">ArticlesList</Typography>
-          </Link>
-          <Link to="/Articles" className={classes.link}>
-            <Typography variant="h6">Articles</Typography>
           </Link>
         </Toolbar>
       </AppBar>
