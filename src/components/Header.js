@@ -19,7 +19,7 @@ const Header = () => {
           <Link to="/" className={classes.link}>
             <Typography variant="h6">Articles</Typography>
           </Link>
-          <Link to="/ArticlesList&height=200&width=200" className={classes.link}>
+          <Link to="/ArticlesList" className={classes.link}>
             <Typography variant="h6">ArticlesList</Typography>
           </Link>
         </Toolbar>

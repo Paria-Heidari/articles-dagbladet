@@ -18,18 +18,13 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 
 
 const ArticlesItems = (props) => {
-    const height = new URLSearchParams(window.location.href).get('height');
-    const width = new URLSearchParams(window.location.href).get('width');
-    const styles = {
-        media: {
-          height: Number(height),
-          width: Number(width),
-        }
-    };
     const [articles, setArticles] = useState({props});
     const [titleValue, setTitleValue] = useState(props.article.title);
     const [editMode, setEditMode] = useState(false);
     const [open, setOpen] = React.useState(false);
+
+    const heightValue = "&height=300";
+    const modifiedImageUrl =props.article.imageUrl+heightValue;
 
     const handleClickOpen = () => {
         setOpen(!open);
@@ -61,12 +56,7 @@ const ArticlesItems = (props) => {
     return(
         <Grid item xs={12} sm={props.article.width} md={props.article.width} >
             <Card sx={{ maxWidth: 345 }} elevation={2}>
-                <CardMedia
-                    component="img"
-                    image={props.article.imageUrl}
-                    alt={props.article.type}
-                    style={styles.media} 
-                />
+                <img alt={props.article.type} src={modifiedImageUrl}/>
                 <CardContent>
                     <form onSubmit = {(e) => {onSubmit(e)}}>
                         <input
