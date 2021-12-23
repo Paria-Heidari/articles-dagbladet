@@ -27,8 +27,8 @@ class App extends React.Component{
             <BrowserRouter>
             <Header/>
                 <Routes>
-                    <Route path="/"  element={<Articles articles={this.state.articles}/>}  />
-                    <Route path="/ArticlesList"  element={<ArticlesList articles={this.state.articles}/>}/>
+                    <Route path="/"  element={<ArticlesList articles={this.state.articles}/>}/>
+                    <Route path="/ArticlesList"  element={<Articles articles={this.state.articles}/>}  />
                 </Routes>
             </BrowserRouter>
         </div>
