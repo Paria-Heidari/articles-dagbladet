@@ -1,11 +1,11 @@
-import React, {useState} from "react";
+import React, { useState} from "react";
 import ArticlesItems from "./ArticlesItems";
 import Grid from "@material-ui/core/Grid";
 import Box from '@material-ui/core/Box';
 
 const ArticlesList = (props) => {
     
-    const [articles, setArticles] = useState(props.articles);
+    const [articles, setArticles, ref] = useState(props.articles);
 
     // Edit title
     const onEditSubmit =  async (editedArti) =>{
@@ -19,7 +19,7 @@ const ArticlesList = (props) => {
                     // Update the property
                     copy_selectedArticle.title = editedArti.props.article.title;
                     // put it back into array
-                    artCol = copy_selectedArticle
+                    artCol = copy_selectedArticle;
                 }
                 return artCol;
             });
@@ -28,7 +28,6 @@ const ArticlesList = (props) => {
     });
         setArticles(copy_articles);
     }
-
     // delete Article
     const onDeleteSubmit = async ( selectedArticle) =>{
         let filteredArticles = [...articles];
@@ -36,16 +35,24 @@ const ArticlesList = (props) => {
             if (rowIndex === selectedArticle.rowIndex) {
                 row.columns.map((article, columnIndex) => {
                     if (columnIndex === selectedArticle.index) {
-                        delete filteredArticles[rowIndex].columns[columnIndex];
+                        let copy_selectedArticle = { ...article};
+                        delete  filteredArticles[rowIndex].columns[columnIndex];
+                        setTimeout(() => {
+                            if(window.confirm("Ønsker du å restaurere den slettede artikkelen?")){
+                                let updatedArticles = [...filteredArticles];
+                                row.columns[columnIndex] = copy_selectedArticle;
+                                filteredArticles[rowIndex].columns[columnIndex]=row.columns[columnIndex];
+                                setArticles(updatedArticles);
+                            }
+                        }, 1000);
                     }
-                    return columnIndex;
+                    return article;
                 })
             }
             return rowIndex;
         });
         setArticles(filteredArticles);
     }
-
     const articlesList = props.articles.map((arti,rowIndex) =>{
         return arti.columns.map((article,index)=>{
             return <ArticlesItems key={index} article={article} rowIndex={rowIndex} index={index} onEditSubmit={onEditSubmit} onDeleteSubmit={onDeleteSubmit}/>;
