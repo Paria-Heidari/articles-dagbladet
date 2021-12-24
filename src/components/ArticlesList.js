@@ -5,7 +5,7 @@ import Box from '@material-ui/core/Box';
 
 const ArticlesList = (props) => {
     
-    const [articles, setArticles, ref] = useState(props.articles);
+    const [articles, setArticles] = useState(props.articles);
 
     // Edit title
     const onEditSubmit =  async (editedArti) =>{
